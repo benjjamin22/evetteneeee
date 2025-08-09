@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="stylex.css" />
+    <title>NUASA IMSU ID CARD FORM</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="cont">
+            <h1>EVETT INST.</h1>
+            <h1 style="margin-top:1.5rem ;">ID CARD FORM</h1>
+            <div class="text">
+                <p>crosscheck carefully before submitting </p>
+                <p>as you cant submit twice</p>
+            </div>
+            <form method="post" action="/new" enctype="multipart/form-data">
+                <div class="Card-line">
+                    <div class="Card">
+                        <div class="form-control">
+                            <label style="margin-top:-1rem;color: lightblue;">First Name</label>
+                            <input style="width: 10.3rem;" type="text" name="Name">
+                        </div>
+                        <div class="form-control">
+                            <input style="width: 10.3rem;" type="text" name="Mname">
+                            <label style="margin-top:-1rem;color: lightblue;">Middle Name</label>
+                        </div>
+                        <div class="form-control">
+                            <input input style="width: 10.3rem;" type="text" name="Surname">
+                            <label style="margin-top:-1rem;color: lightblue;">Surname</label>
+                        </div>
+                        <div class="form-control">
+                            <input style="width: 10.3rem;" type="text" name="RegNo" >
+                            <label style="margin-top:-1rem;color: lightblue;">Reg No</label>
+                        </div>
+                    </div>
+                    <div class="upload-box" id="upload-box" style="margin-top: 1.5rem;height: 12.5rem;width: 12rem;">
+                        <span>Click to upload an image</span>
+                        <img id="uploaded-image" src="#" alt="Uploaded Image">
+                    </div>
+                    <input type="file" id="file-input" accept="image/*" name="image">
+                </div>
+                <div class="Card-line">
+                    <div class="Card">
+                        <div class="form-control">
+                            <input type="text" name="State">
+                            <label style="margin-top:-1rem;color: lightblue;">State</label>
+                        </div>
+                    </div>
+                    <div class="Card">
+                        <div class="form-control">
+                            <input type="text" name="LocalGovernment">
+                            <label style="margin-top:-1rem;color: lightblue;">Lga</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="Card-line">
+                    <div class="Card">
+                        <div class="form-control">
+                            <input type="text" name="Gender">
+                            <label style="margin-top:-1rem;color: lightblue;">Gender</label>
+                        </div>
+                    </div>
+                    <div class="Card">
+                        <div class="form-control">
+                            <input type="text" name="Bloodgroup">
+                            <label style="margin-top:-1rem;color: lightblue;">Blood Grp</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="Card-line">
+                    <div class="Card">
+                        <div class="form-control">
+                            <input type="text" name="PhoneNumber">
+                            <label style="margin-top:-1rem;color: lightblue;">Phone No</label>
+                        </div>
+                    </div>
+                    <div class="Card">
+                        <div class="form-control">
+                            <input type="text" name="EmergencyNo">
+                            <label style="margin-top:-1rem;color: lightblue;">Emergency No.</label>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn" type="submit">SUBMIT</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        window.addEventListener("pageshow", function(event) {
+            var historyTraversal = event.persisted,
+                perf = window.performance,
+                perfEntries = perf && perf.getEntriesByType && perf.getEntriesByType("navigation"),
+                perfEntryType = perfEntries && perfEntries[0] && perfEntries[0].type,
+                navigationType = perf && perf.navigation && perf.navigation.type;
+            if (
+                historyTraversal || perfEntryType === "back_forward" || navigationType === 2
+            ) {
+                window.location.reload();
+            }
+        })
+
+        const uploadBox = document.getElementById('upload-box');
+        const fileInput = document.getElementById('file-input');
+        const uploadedImage = document.getElementById('uploaded-image');
+
+        uploadBox.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    uploadedImage.src = e.target.result;
+                    uploadedImage.style.display = 'block';
+                    uploadBox.querySelector('span').style.display = 'none';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+    <script src="public/script.js"></script>.
+
+</body>
+
+</html>

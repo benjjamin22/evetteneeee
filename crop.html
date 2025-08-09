@@ -1,0 +1,36 @@
+<indexhtm> @ hm> @body>6 @ divicontainer > button#btncrop2 
+    <html lang= "en">O10 c/ned@?11 
+        <body>
+            <div id="container">
+                <h1>Crop Image</h1>
+                <div id="browse-section">
+                    <label for=uploadImage" id="upload- -. label">
+                        <img src="images/find.png" alt="Choose Image">
+                    </label>
+                    <input type="file" id= "uploadImage" accept= "image/*"/>
+                </div>
+                <div id="image-container" style= "display: none; ">
+                    <img Src="" id="imagePreview" alt= "Preview Image">
+                </div>
+                <button id="btnCrop">Crop Image</button>
+             </div>
+             <script>
+ const uploadImage = document.querySelector ("#uploadImage"),
+ imagePreview = document. queryselector("#imagePreview"),
+ btnCrop = document.querySelector(" #btnCrop"),
+ browseSection = document. queryselector( "#browse-section"), 
+ btnCropbrowsesection = document.queryselector( "#browse-section"), 
+ imageContainer = document.querySelector ("#image-container");
+
+ let cropper = null, originalImage=null;
+
+ uploadImage.addEventlistener("change", (evt) => {
+    const file = evt.target.files[0];
+    if(file){
+        const reader = new scriptjs > @ btnCrop.addEventlistener(" dlick") callback > [e] canvas○uploadImage.addEventListener("change", (evt) =>(OTO39reader.readAsDataURL(file);40R74189124344 //Handle image cropping45 btnCrop.addEventlistener("click", ()=>[48 46 Aif(!cropper)return;Iconst canvas = cropper.getCroppedCanvas((45 btnCrop.addEventListener("click", ()=>46if(!cropper)return;4748const canvas = cropper.getroppedCanvas (49width: 350,50height: 350,const croppedImageData = canvas.toDataURL( image/jpeg" 0.9);cropper.destroy();55K56imagePreview.src=croppedImageData;cropper = new cropper(imagePreview,
+go52const croppedImageData = canvas. toDataURL (image/jpeg", 0.9);53&54 55 So 57 58 59 60 61 62 63 64 65 66 67 68cropper.destroy();EimagePreview.src=croppedImageData;cropper = new cropper(imagePreview,faspectRatio: 1,viewMode: 2,dragMode: 'move'background: true,Here we can drag toresponsive: true,autoCropArea: 1
+
+D(index)11if(file)(12const reader " ne₩ FileReader();reader.onload = (e) =>(13//Store the original image data14originalImage = e.target.result;1516browseSection. style.display "none";1718 19imageContainer.style.display "block";imagePreview.src = originalImage;20//Destroy existing cropper if exists21if(cropper)(22cropper.destroy();2A 2 26 27 28 29 30 31 32 33 34 35 36//Initialize Cropper.jscropper = new Cropper(imagePreview, faspectRatio: 1, //1:1 ratioviewMode: 2,draghode: "move"background: true,responsive: true,ready0)(btnCrop.style.display "inline-block";Dimensions: ResponsiveY526X 507100% Y DPR:2.0 Y MobileXCrop ImageLine 27, Column 2000ffyou-check it-now, oh great So.youBreakpointseptionscanENG○SearchC laO.IXUSD;Coverage:
+</script>
+            </body>
+            </html>

@@ -1,0 +1,246 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+condensed');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+   justify-content: center;
+   align-items: center;
+    font-family: 'Roboto Condensed', sans-serif;
+    margin-top: 0rem;
+    background-color: #dcdcdc;
+}
+
+.user-profile {
+    margin-top: 0rem;
+    background-color: #dcdcdc;
+    width: 25.5rem;
+    max-width: 30rem;
+    border-radius: .5rem;
+    overflow: hidden;
+    margin: 0px auto;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+    flex-wrap: wrap;
+    padding-bottom:.5rem;
+}
+.ccontainer {
+    max-width: 550px;
+    height: 820px;
+    margin: 30px auto;
+    background-image: url("/public/flexbox/isembback.png");
+    background-repeat: no-repeat;
+    background-size: 95%;
+    background-position: center;
+    justify-content: center;
+    display: flex;
+  }
+
+  .profile-top img {
+    border-radius: 5%;
+    border: 0px solid white;
+    height: 20em;
+    width: 17rem;
+    object-fit: cover;
+    margin-top: 0px;
+}
+
+.profile-top .profile-info {
+    margin-top: 0rem;
+    color: rgb(235, 223, 223);
+}
+
+.profile-bottom {
+    margin-top: .5rem;
+    padding: .5rem;
+    margin-left: 1rem;
+}
+
+.profile-info p2 {
+    padding: 0 0px;
+    color: white;
+}
+
+.p1 {
+    background-color: black;
+    width: 9.5rem;
+    height: 2.5rem;
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+    display: flex;
+    align-items: center;
+    max-width: 95%;
+    justify-content: center;
+}
+
+.p2 {
+    background-color: red;
+    width: 9.5rem;
+    height: 2.5rem;
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+    display: flex;
+    align-items: center;
+    max-width: 95%;
+    justify-content: center;
+}
+
+.social {
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    width: 75%;
+    margin-left: 2.5rem;
+    padding: 0 0rem;
+}
+
+.social a {
+    text-decoration: none;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    width: 1.7em;
+    height: 1.7em;
+    background-color: red;
+    border-radius: 50%;
+    font-size: 2em;
+    color: #dcdcdc;
+    box-shadow: rgb(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 03)0px 8px 16px -8px;
+}
+
+#fb {
+    display: none;
+}
+
+#ins {
+    display: none;
+}
+
+#tiktok {
+    display: none;
+}
+
+#twitter {
+    display: none;
+}
+
+button {
+    text-decoration: none;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    font-size: 2em;
+    color: #dcdcdc;
+    box-shadow: rgb(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 03)0px 8px 16px -8px;
+}
+input:focus {
+            outline: none; /* Removes the focus border */
+            border: none;  /* Optional: Removes the border if present */
+        }
+    
+button:active {
+            background-color: red; /* Change color when clicked */
+}
+
+.social a:nth-child(1) {
+    background-color: rgb(28, 88, 158);
+}
+
+.social a:nth-child(2) {
+    background: color #fc01cd;
+    ;
+}
+
+.social a:nth-child(3) {
+    background-color: #313131;
+}
+
+.social a:nth-child(4) {
+    background-color: rgb(28, 88, 158);
+}
+
+.profile-info h1 {
+    font-weight: 100px;
+    font-size: 20px;
+}
+
+.profile-bottom .profile-info {
+    background-color: white;
+    padding: .5rem;
+    margin-bottom: 1rem;
+    border-radius: .0rem;
+    display: flex;
+    align-items: center;
+    max-width: 95%;
+    justify-content: center;
+    box-shadow: rgb(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 03)0px 8px 16px -8px;
+    transition: 0.5s ease;
+    border: 1px rgb(214, 211, 211) solid;
+}
+
+.profile-bottom .profile-info:hover {
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+.over {
+    background-color: #fff;
+    padding: 2rem;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    max-height: 70%;
+    transform: translateX(101%);
+    overflow-y: auto;
+    transition: transform 0.3s ease-in;
+}
+
+
+.moviee {
+    width: 50rem;
+    height: 50rem;
+    background-color: yellow;
+    justify-content: center;
+    align-items: center;
+}
+
+.fb:hover .over {
+    transform: translatex(0);
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    margin-left: 1.5rem;
+}
+
+ul li {
+    width: 80px;
+    float: left;
+    background: #dbdbdb;
+    line-height: 2em;
+    text-align: center;
+    margin: 0 -2px;
+    cursor: pointer;
+}
+
+ul li span {
+    display: block;
+}
+
+ul li ul {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+.profile-bottom .profile-info .hover:hover {
+    background-color: rgb(113, 81, 228);
+}
