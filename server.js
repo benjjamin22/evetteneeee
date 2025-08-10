@@ -82,7 +82,7 @@ var NoteSchemer = new Schema({
     RegNo: { type: String, uppercase: true },
     Validity: { type: String, uppercase: true },
     Modeofstudy: { type: String, uppercase: true },
-    Gender: { type: String, uppercase: true },
+    Sex: { type: String, uppercase: true },
     Bloodgroup: { type: String, uppercase: true },
     PhoneNumber: { type: String, uppercase: true },
     EmergencyNo:{ type: String, uppercase: true },
@@ -146,7 +146,7 @@ app.get('/new', (req, res) => {
 app.post('/edit/:id', async (req, res) => {
   const {id} = req.params;
   try{
-    const founduser = await Evette.findById(id);
+    const founduser = await Evette.findByIdAndUpdate(id);
     if (!founduser){
       return res.status(404).send('no user found')
     }
@@ -154,20 +154,55 @@ app.post('/edit/:id', async (req, res) => {
     founduser.Aname.Mname = req.body.Mname,
     founduser.Aname.Surname = req.body.Surname,
     founduser.RegNo = req.body.RegNo,
-    founduser.Sex = req.body.Sex,
+    founduser.Validity = req.body.Validity,
+    founduser.Sex = req.body.Gender,
     founduser.Bloodgroup= req.body.Bloodgroup,
-    founduser.PhoneNumber= req.body.PhoneNo,
+    founduser.PhoneNumber= req.body.PhoneNumber,
     founduser.EmergencyNo= req.body.EmergencyNo,
     founduser.State= req.body.State,
-    founduser.LocalGovernment= req.body.LocalGovt,          
+    founduser.LocalGovernment= req.body.LocalGovernment,          
   
-  await founduser.save();
+  //await founduser.save();
+  await founduser.updateOne({$set:founduser},{ new: true, runValidators: true });
   res.redirect('/' + req.params.id)
 
   } catch (err){
   res.status(500).send('error occured');
   }
   });
+
+//  const useroo = await ben.updateOne({_id:_id},{$set:{used:true}});
+       // useroo.used = true
+
+  app.post('/edippoot/:id', async (req, res) => {
+  try {
+    let updateData = {};
+
+    // Top-level fields
+    if (req.body.RegNo) updateData.RegNo = req.body.RegNo;
+    if (req.body.Sex) updateData.Sex = req.body.Gender;
+    if (req.body.Bloodgroup) updateData.Bloodgroup = req.body.Bloodgroup;
+    if (req.body.PhoneNumber) updateData.PhoneNumber = req.body.PhoneNumber;
+    if (req.body.EmergencyNo) updateData.EmergencyNo = req.body.EmergencyNo;
+    if (req.body.State) updateData.State = req.body.State;
+    if (req.body.LocalGovernment) updateData.LocalGovernment = req.body.LocalGovernment
+
+    // Nested contact fields
+    if (req.body.Name) updateData['Aname.Name'] = req.body.Name;
+    if (req.body.Mname) updateData['Aname.Mname'] = req.body.Mname;
+    if (req.body.Surname) updateData['Aname.Surname'] = req.body.Surname;
+
+    await Evette.findByIdAndUpdate(
+      req.params.id,
+      { $set: updateData },
+      { new: true, runValidators: true }
+    );
+
+    res.redirect('/' + req.params.id);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
 
   //const passo = hashID(6)
   let gen = n=> [...Array(n)].map(_=>Math.random()*10|0).join``
@@ -181,13 +216,12 @@ app.post('/edit/:id', async (req, res) => {
   const uuidfh = customAlphabet('123456890',5);
   
   
-  async function uploadImageToGoogleDrive(file) {
+async function uploadImageToGoogleDrive(file) {
     const bufferStream = new stream.PassThrough();
     bufferStream.end(file.buffer);
-    const uuidf = uuidfh() + '.jpg';
+    const uuid = uuidfh() + '.jpg';
     const fileMetadata = {
-        name: uuidf,
-        //name: req.file.originalname,
+        name: uuid,
         //name: file.originalname,
         parents: ["10KpoRo-jHT62ko_7BNH9khxA2S_6GY42"],
     };
@@ -200,47 +234,74 @@ app.post('/edit/:id', async (req, res) => {
     const response = await drive.files.create({
         resource: fileMetadata,
         media: media,
-        fields: 'id,name'
-        //fields: 'id, webContentLink',
+        fields: 'id,webViewLink,name'
     });
 
-    return response.data.name
+    return response.data
 }
 
-
- 
-  app.post("/new", upload.single('image'), async(req, res) => {
+   app.post("/new", upload.single('image'), async(req, res) => {
     try {
         const Pathoo = await uploadImageToGoogleDrive(req.file);
-        const imagePath = Pathoo;
+       const imagePath = 'image/' + Pathoo.name;
+        const urli =  Pathoo.webViewLink;
+        const urlii =  'https://lh3.googleusercontent.com/d/' + Pathoo.id + '=s400?authuser=0';
 
-      let newEvette = new Evette({
-        Aname: {
-          Name: req.body.Name,
-          Mname: req.body.Mname,
-          Surname: req.body.Surname
-      },
-        RegNo: req.body.RegNo,
-        Validity: req.body.Validity,
-        Modeofstudy: req.body.Modeofstudy,
-        Gender: req.body.Gender,
-        Bloodgroup: req.body.Bloodgroup,
-        PhoneNumber: req.body.PhoneNumber,
-        EmergencyNo: req.body.EmergencyNo,
-        State: req.body.State,
-        LocalGovernment: req.body.LocalGovernment, 
-        image: '/image/' + req.body.image + '.jpg', 
-        picturepath: imagePath        
-    });
-    await newEvette.save();
-    res.send(`<!DOCTYPE html><html><body><h1 style="font-size:6rem; margin-top:8rem;text-align: center;">SUCCESSFUL</h1>
-      </html>`)
-    } catch (err){
-    res.status(500).send('error ocĉured');
-    }
-    });
+        function pad(n) {
+            return n < 10 ? '0' + n : n;
+        }
 
-   
+        // Get the current date and time
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = pad(now.getMonth() + 1); // Months are zero-based
+        const day = pad(now.getDate());
+        const hours = pad(now.getHours());
+        const minutes = pad(now.getMinutes());
+        const seconds = pad(now.getSeconds());
+
+        // Format the date and time
+        const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+
+        let newEvette = new Evette({
+            Aname: {
+                 Name: req.body.Name,
+                 Mname: req.body.Mname,
+                 Surname: req.body.Surname
+             },
+            fullname: req.body.fullname,
+            State: req.body.State,
+            LocalGovernment: req.body.LocalGovernment,
+            Sex: req.body.Gender,
+            Bloodgroup: req.body.Bloodgroup,
+            PhoneNumber: req.body.PhoneNumber,
+            EmergencyNo: req.body.EmergencyNo,
+            RegNo: req.body.RegNo,
+            Validity: req.body.Validity,
+            picturepath: imagePath,
+            //picturepath: req.body.imagePath,
+            imgurl: urli,
+            image: urlii,
+            //imgurli: req.body.urlii,
+            time: formattedDate,
+            
+        });
+        const {RegNo} = req.body;
+        const exist = await Evette.findOne({ RegNo });
+          if (exist) {
+         res.send('<h1 style="font-size:6rem;margin-top:15rem;text-align:center;justify-self:center;">Already exist<h1>');
+          }
+        await newEvette.save();
+        res.redirect(`sample.html`)
+    } catch (error) {
+        res.status(500).send('Error saving data');
+    } //finally {
+    //fs.unlinkSync(req.file.path); // Clean up the uploaded file
+    //}
+    //res.json({message: `Post added successfully! Your Post Id is ${newPost.id}`,});
+    //res.redirect("/"); <h1 style="font-size:5rem; margin-top:0rem;text-align: center;">${newNote.EmergencyNo}</h1>
+})
   
 
 connectDB()
