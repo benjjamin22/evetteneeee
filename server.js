@@ -293,7 +293,7 @@ async function uploadImageToGoogleDrive(file) {
          res.send('<h1 style="font-size:6rem;margin-top:15rem;text-align:center;justify-self:center;">Already exist<h1>');
           }
         await newEvette.save();
-        res.redirect(`sample.html`)
+        res.redirect(`/sample.html`)
     } catch (error) {
         res.status(500).send('Error saving data');
     } //finally {
