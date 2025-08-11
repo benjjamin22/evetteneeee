@@ -18,7 +18,7 @@ const Schema = mongoose.Schema
 
 
 
-const serverUrl = 'https://evettid.onrender.com';
+const serverUrl = 'https://evettenew.onrender.com';
 
 const keepAlive = () => {
     axios.get(serverUrl)
