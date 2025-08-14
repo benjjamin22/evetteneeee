@@ -32,7 +32,7 @@ const keepAlive = () => {
 
 cron.schedule('*/14 * * * *', () => {
   console.log('Sending keep-alive request to server...');
-  keepAlive();
+  keepAlive;
 });
 
 console.log('Keep-alive script started.');
