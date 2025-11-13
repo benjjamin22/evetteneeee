@@ -32,7 +32,7 @@ const keepAlive = () => {
 
 cron.schedule('*/14 * * * *', () => {
   console.log('Sending keep-alive request to server...');
-  keepAlive();
+  keepAlive;
 });
 
 console.log('Keep-alive script started.');
@@ -71,6 +71,32 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(methodOverride('_method'))
 
+  const uuidfh = customAlphabet('123456890',5);
+  
+  
+async function uploadImageToGoogleDrive(file) {
+    const bufferStream = new stream.PassThrough();
+    bufferStream.end(file.buffer);
+    const uuid = uuidfh() + '.jpg';
+    const fileMetadata = {
+        name: uuid,
+        //name: file.originalname,
+        parents: ["10KpoRo-jHT62ko_7BNH9khxA2S_6GY42"],
+    };
+
+    const media = {
+        mimeType: file.mimetype,
+        body: bufferStream
+    };
+
+    const response = await drive.files.create({
+        resource: fileMetadata,
+        media: media,
+        fields: 'id,webViewLink,name'
+    });
+
+    return response.data
+}
 
 //SCHEMA
 var NoteSchemer = new Schema({
@@ -146,7 +172,12 @@ app.get('/new', (req, res) => {
 app.post('/edit/:id', async (req, res) => {
   const {id} = req.params;
   try{
-    const founduser = await Evette.findByIdAndUpdate(id);
+     const Pathoo = await uploadImageToGoogleDrive(req.file);
+        const imagePath = 'image/' + Pathoo.name;
+        const urli =  Pathoo.webViewLink;
+        const urlii =  'https://lh3.googleusercontent.com/d/' + Pathoo.id + '=s400?authuser=0';
+        const founduser = await Evette.findById(id);
+       console.log(founduser)
     if (!founduser){
       return res.status(404).send('no user found')
     }
@@ -160,7 +191,10 @@ app.post('/edit/:id', async (req, res) => {
     founduser.PhoneNumber= req.body.PhoneNumber,
     founduser.EmergencyNo= req.body.EmergencyNo,
     founduser.State= req.body.State,
-    founduser.LocalGovernment= req.body.LocalGovernment,          
+    founduser.LocalGovernment= req.body.LocalGovernment,
+    founduser.picturepath = imagePath,
+    founduser.imgurli = urlii,  
+    founduser.imgurl = urli,          
   
   //await founduser.save();
   await founduser.updateOne({$set:founduser},{ new: true, runValidators: true });
@@ -213,32 +247,7 @@ app.post('/edit/:id', async (req, res) => {
   let uuide = ( +(sixDigitStr) ) // + convert to num
   
   
-  const uuidfh = customAlphabet('123456890',5);
-  
-  
-async function uploadImageToGoogleDrive(file) {
-    const bufferStream = new stream.PassThrough();
-    bufferStream.end(file.buffer);
-    const uuid = uuidfh() + '.jpg';
-    const fileMetadata = {
-        name: uuid,
-        //name: file.originalname,
-        parents: ["10KpoRo-jHT62ko_7BNH9khxA2S_6GY42"],
-    };
 
-    const media = {
-        mimeType: file.mimetype,
-        body: bufferStream
-    };
-
-    const response = await drive.files.create({
-        resource: fileMetadata,
-        media: media,
-        fields: 'id,webViewLink,name'
-    });
-
-    return response.data
-}
 
    app.post("/new", upload.single('image'), async(req, res) => {
     try {
