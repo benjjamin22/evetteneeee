@@ -19,7 +19,7 @@ async function getData() {
     nuasa.forEach((user) => {
         const div = document.createElement('div')
         listItems.push(div)
-        div.innerHTML = `<a style="text-decoration:none;" href="/${user._id}">
+        div.innerHTML = `<a style="text-decoration:none;" href="/edit/${user._id}">
         <div class="movie">
         <img src="${user.image}"style="height:100px; width:90px;">
         <div class="movie-info">

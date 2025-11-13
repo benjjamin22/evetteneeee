@@ -32,7 +32,7 @@ const keepAlive = () => {
 
 cron.schedule('*/14 * * * *', () => {
   console.log('Sending keep-alive request to server...');
-  keepAlive;
+  keepAlive();
 });
 
 console.log('Keep-alive script started.');
@@ -296,11 +296,11 @@ app.post('/edit/:id', async (req, res) => {
             time: formattedDate,
             
         });
-        const {RegNo} = req.body;
-        const exist = await Evette.findOne({ RegNo });
-          if (exist) {
-         res.send('<h1 style="font-size:6rem;margin-top:15rem;text-align:center;justify-self:center;">Already exist<h1>');
-          }
+        //const {RegNo} = req.body;
+        //const exist = await Evette.findOne({ RegNo });
+          //if (exist) {
+         //res.send('<h1 style="font-size:6rem;margin-top:15rem;text-align:center;justify-self:center;">Already exist<h1>');
+        //  }
         await newEvette.save();
         res.redirect(`/sample.html`)
     } catch (error) {
