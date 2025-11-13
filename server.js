@@ -231,8 +231,8 @@ app.post('/edit/:id', async (req, res) => {
       { $set: updateData },
       { new: true, runValidators: true }
     );
-
-    res.redirect('/' + req.params.id);
+ res.redirect(`/sample.html`)
+    //res.redirect('/' + req.params.id);
   } catch (err) {
     res.status(500).send(err.message);
   }
