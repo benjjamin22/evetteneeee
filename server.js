@@ -313,7 +313,7 @@ app.post('/edit/:id', async (req, res) => {
 })
   
 
-//connectDB()
-//app.listen(3000, (req, res) => {
+connectDB()
+app.listen(3000, (req, res) => {
   console.log('The server is up and running on port 3000')
 });
